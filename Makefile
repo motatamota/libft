@@ -56,7 +56,11 @@ $(NAME): $(OBJ)
 $(SRCDIR)/%.o: $(SRCDIR)/%.c
 	$(CC) $(CFLAGS) -I $(INCDIR) -c $< -o $@
 bonus: $(BONUSOBJ)
+	if [ ! -f $(NAME) ]; then \
+		$(MAKE) all; \
+	fi
 	ar rcs $(NAME) $^
+
 $(BONUSDIR)/%.o: $(BONUSDIR)/%.c
 	$(CC) $(CFLAGS) -I $(INCDIR) -c $< -o $@
 clean:
