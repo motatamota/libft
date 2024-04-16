@@ -49,15 +49,13 @@ BONUS = ft_lstnew.c\
 		ft_lstmap.c
 BONUSOBJ = $(BONUS:%.c=%.o)
 NAME = libft.a
-BNAME = libft.a
 
 all: $(NAME)
 $(NAME): $(OBJ)
 	ar rcs $@ $^
 $(SRCDIR)/%.o: $(SRCDIR)/%.c
 	$(CC) $(CFLAGS) -I $(INCDIR) -c $< -o $@
-bonus: $(BNAME)
-$(BNAME): $(BONUSOBJ)
+bonus: $(BONUSOBJ)
 	ar rcs $(NAME) $^
 $(BONUSDIR)/%.o: $(BONUSDIR)/%.c
 	$(CC) $(CFLAGS) -I $(INCDIR) -c $< -o $@
