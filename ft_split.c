@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
 
 void	skip(size_t *p, const char *s, char c)
 {
@@ -39,43 +40,45 @@ static int	how(const char *s, char c)
 	return (count);
 }
 
-void	set_str(size_t p, char **box, const char *s)
-{
-	size_t	q;
-	char	*str;
-
-	str = (char *)malloc(sizeof(char) * (p + 1));
-	q = 0;
-	while (q < p && *(s + q))
-	{
-		*(str + q) = *(s + q);
-		q++;
-	}
-	*(str + q) = '\0';
-	*box = str;
-}
-
-static void	set(const char *s, char c, char **box)
+static int	set(const char *s, char c, char **box)
 {
 	size_t	p;
 	size_t	ch;
 
-	p = 0;
+	p = -1;
 	ch = 0;
-	while (*(s + p))
+	while (*(s + ++p))
 	{
 		if (*(s + p) == c)
 		{
-			set_str(p - ch, box, s + ch);
+			*box = ft_strdup(s + ch);
+			if (!*box)
+				return (0);
+			*(*box + p - ch) = '\0';
 			skip(&p, s, c);
 			ch = p;
 			p--;
 			box++;
 		}
-		p++;
 	}
+	*box = ft_strdup(s + ch);
+	if (*(s + p - 1) != c && !*box)
+		return (0);
 	if (*(s + p - 1) != c)
-		set_str(p - ch, box, s + ch);
+		*(*box + p - ch) = '\0';
+	return (1);
+}
+
+void	splitfree(char **box)
+{
+	int	n;
+
+	n = 0;
+	while (*(box + n))
+	{
+		free(*(box + n));
+		n++;
+	}
 }
 
 char	**ft_split(char const *s, char c)
@@ -95,21 +98,26 @@ char	**ft_split(char const *s, char c)
 		return (box);
 	}
 	many = how(s + p, c);
-	box = (char **)malloc(sizeof(char *) * (many + 1));
+	box = (char **)ft_calloc(sizeof(char *), many + 1);
 	if (!box)
 		return (0);
-	set(s + p, c, box);
+	if (!set(s + p, c, box))
+	{
+		splitfree(box);
+		return (0);
+	}
 	*(box + many) = 0;
 	return (box);
 }
 
+// #include <stdio.h>
 // int main()
 // {
 // 	char **box;
 // 	int	n;
 
 // 	n = 0;
-// 	box = ft_split("", 0);
+// 	box = ft_split("  tripouille  42  ", ' ');
 // 	if (box == 0)
 // 		return 0;
 // 	while (*(box + n))

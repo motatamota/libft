@@ -12,6 +12,18 @@
 
 #include "libft.h"
 
+void	memmovesub(unsigned char *box, size_t n, unsigned char *bot)
+{
+	size_t	k;
+
+	k = n;
+	while (k > 0)
+	{
+		*(box + k - 1) = *(bot + k - 1);
+		k--;
+	}
+}
+
 void	*ft_memmove(void *buf1, const void *buf2, size_t n)
 {
 	size_t			k;
@@ -32,13 +44,6 @@ void	*ft_memmove(void *buf1, const void *buf2, size_t n)
 		}
 	}
 	else
-	{
-		k = n;
-		while (k > 0)
-		{
-			*(box + k - 1) = *(bot + k - 1);
-			k--;
-		}
-	}
+		memmovesub(box, n, bot);
 	return (buf1);
 }
