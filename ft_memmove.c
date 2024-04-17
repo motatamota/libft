@@ -18,6 +18,8 @@ void	*ft_memmove(void *buf1, const void *buf2, size_t n)
 	unsigned char	*box;
 	unsigned char	*bot;
 
+	if (!buf2)
+		return (0);
 	box = (unsigned char *)buf1;
 	bot = (unsigned char *)buf2;
 	if (buf1 < buf2)
