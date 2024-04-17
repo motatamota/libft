@@ -56,15 +56,12 @@ $(NAME): $(OBJ)
 $(SRCDIR)/%.o: $(SRCDIR)/%.c
 	$(CC) $(CFLAGS) -I $(INCDIR) -c $< -o $@
 bonus: $(BONUSOBJ)
-	if [ ! -f $(NAME) ]; then \
-		$(MAKE) all; \
-	fi
+	touch bonus
 	ar rcs $(NAME) $^
-
 $(BONUSDIR)/%.o: $(BONUSDIR)/%.c
 	$(CC) $(CFLAGS) -I $(INCDIR) -c $< -o $@
 clean:
-	rm -f $(OBJ) $(BONUSOBJ)
+	rm -f $(OBJ) $(BONUSOBJ) bonus
 fclean: clean
 	rm -f $(NAME)
 re: fclean all
