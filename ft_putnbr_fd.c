@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-void	set(long k, int fd)
+static void	set(long k, int fd)
 {
 	char	c;
 

@@ -22,6 +22,8 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 		return (0);
 	len = ft_strlen(s);
 	box = (char *)malloc(sizeof(char) * (len + 1));
+	if (!box)
+		return (0);
 	n = 0;
 	while (n < len)
 	{

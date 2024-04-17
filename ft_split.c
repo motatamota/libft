@@ -18,7 +18,7 @@ void	skip(size_t *p, const char *s, char c)
 		(*p)++;
 }
 
-int	how(const char *s, char c)
+static int	how(const char *s, char c)
 {
 	size_t	n;
 	int		count;
@@ -55,7 +55,7 @@ void	set_str(size_t p, char **box, const char *s)
 	*box = str;
 }
 
-void	set(const char *s, char c, char **box)
+static void	set(const char *s, char c, char **box)
 {
 	size_t	p;
 	size_t	ch;
@@ -96,6 +96,8 @@ char	**ft_split(char const *s, char c)
 	}
 	many = how(s + p, c);
 	box = (char **)malloc(sizeof(char *) * (many + 1));
+	if (!box)
+		return (0);
 	set(s + p, c, box);
 	*(box + many) = 0;
 	return (box);

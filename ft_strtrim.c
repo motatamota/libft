@@ -31,6 +31,8 @@ char	*ft_strtrim(char const *s1, char const *set)
 	if (stt + end >= len)
 		return (ft_strdup(""));
 	box = (char *)malloc(sizeof(char) * (len - stt - end + 1));
+	if (!box)
+		return (0);
 	ft_memcpy(box, s1 + stt, len - stt - end);
 	*(box + len - stt - end) = '\0';
 	return (box);

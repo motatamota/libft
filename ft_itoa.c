@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-int	how(long k)
+static int	how(long k)
 {
 	int		l;
 
@@ -27,7 +27,7 @@ int	how(long k)
 	return (l);
 }
 
-void	set(char *str, long k, int n)
+static void	set(char *str, long k, int n)
 {
 	if (k < 10)
 	{
@@ -38,6 +38,32 @@ void	set(char *str, long k, int n)
 	*(str + n) = k % 10 + '0';
 }
 
+char	*itoasub(long k, int *size)
+{
+	char	*str;
+
+	k = -k;
+	(*size)++;
+	str = (char *)malloc(sizeof(char) * (*size + 1));
+	if (!str)
+		return (0);
+	*str = '-';
+	set(str + 1, k, *size - 2);
+	return (str);
+}
+
+char	*itoasub2(long k, int size, int n)
+{
+	char	*str;
+
+	k = n;
+	str = (char *)malloc(sizeof(char) * (size + 1));
+	if (!str)
+		return (0);
+	set(str, k, size - 1);
+	return (str);
+}
+
 char	*ft_itoa(int n)
 {
 	int		size;
@@ -45,21 +71,21 @@ char	*ft_itoa(int n)
 	char	*str;
 
 	k = n;
+	str = 0;
 	size = how(k);
 	if (n < 0)
-	{
-		k = -k;
-		size++;
-		str = (char *)malloc(sizeof(char) * (size + 1));
-		*str = '-';
-		set(str + 1, k, size - 2);
-	}
+		str = itoasub(k, &size);
 	else
-	{
-		k = n;
-		str = (char *)malloc(sizeof(char) * (size + 1));
-		set(str, k, size - 1);
-	}
+		str = itoasub2(k, size, n);
+	if (!str)
+		return (0);
 	*(str + size) = '\0';
 	return (str);
 }
+
+// #include <stdio.h>
+// #include <stdlib.h>
+// int main()
+// {
+// 	printf("%s\n", ft_itoa(-1));
+// }
