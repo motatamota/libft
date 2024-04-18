@@ -18,6 +18,8 @@ int	how(char *s, char c)
 	int	n;
 	int	size;
 
+	if (*s == 0)
+		return (0);
 	n = 0;
 	size = 0;
 	while (*s)
@@ -39,6 +41,7 @@ void	splitfree(char **box)
 {
 	int	n;
 
+	n = 0;
 	while (*(box + n))
 	{
 		free(*(box + n));
@@ -87,13 +90,12 @@ int	setbox(char **box, char *s, int many, char c)
 
 char	**ft_split(char const *s, char c)
 {
-	size_t	p;
 	int		many;
 	char	**box;
 
 	if (s == 0)
 		return (0);
-	while (*s == c)
+	while (*s == c && *s)
 		s++;
 	many = how((char *)s, c);
 	box = (char **)malloc(sizeof(char *) * (many + 1));
@@ -115,7 +117,7 @@ char	**ft_split(char const *s, char c)
 // 	int	n;
 
 // 	n = 0;
-// 	box = ft_split("    ", ' ');
+// 	box = ft_split("                 ", ' ');
 // 	if (box == 0)
 // 		return 0;
 // 	while (*(box + n))
