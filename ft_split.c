@@ -13,72 +13,76 @@
 #include "libft.h"
 #include <stdio.h>
 
-void	skip(size_t *p, const char *s, char c)
+int	how(char *s, char c)
 {
-	while (*(s + *p) == c && c)
-		(*p)++;
-}
-
-static int	how(const char *s, char c)
-{
-	size_t	n;
-	int		count;
+	int	n;
+	int	size;
 
 	n = 0;
-	count = 1;
-	while (*(s + n))
+	size = 0;
+	while (*s)
 	{
-		if (*(s + n) == c)
+		if (*s == c)
 		{
-			skip(&n, s, c);
-			if (*(s + n))
-				count++;
-			n--;
+			size++;
+			while (*s && *(s + 1) == c)
+				s++;
 		}
-		n++;
+		s++;
 	}
-	return (count);
-}
-
-static int	set(const char *s, char c, char **box)
-{
-	size_t	p;
-	size_t	ch;
-
-	p = -1;
-	ch = 0;
-	while (*(s + ++p))
-	{
-		if (*(s + p) == c)
-		{
-			*box = ft_strdup(s + ch);
-			if (!*box)
-				return (0);
-			*(*box + p - ch) = '\0';
-			skip(&p, s, c);
-			ch = p;
-			p--;
-			box++;
-		}
-	}
-	*box = ft_strdup(s + ch);
-	if (*(s + p - 1) != c && !*box)
-		return (0);
-	if (*(s + p - 1) != c)
-		*(*box + p - ch) = '\0';
-	return (1);
+	if (*(s - 1) != c)
+		size++;
+	return (size);
 }
 
 void	splitfree(char **box)
 {
 	int	n;
 
-	n = 0;
 	while (*(box + n))
 	{
 		free(*(box + n));
 		n++;
 	}
+	free(box);
+}
+
+void	setboxsub(int min, int max, char *box, char *s)
+{
+	int	p;
+
+	p = 0;
+	while (min < max)
+	{
+		*(box + p) = *(s + min);
+		p++;
+		min++;
+	}
+}
+
+int	setbox(char **box, char *s, int many, char c)
+{
+	int	n;
+	int	min;
+	int	max;
+
+	n = 0;
+	max = 0;
+	while (n < many)
+	{
+		min = max;
+		while (*(s + max) != c && *(s + max))
+			max++;
+		*(box + n) = (char *)malloc(sizeof(char) * (max - min + 1));
+		if (!*(box + n))
+			return (0);
+		setboxsub(min, max, *(box + n), s);
+		*(*(box + n) + max - min) = '\0';
+		while (*(s + max) == c)
+			max++;
+		n++;
+	}
+	return (1);
 }
 
 char	**ft_split(char const *s, char c)
@@ -89,24 +93,18 @@ char	**ft_split(char const *s, char c)
 
 	if (s == 0)
 		return (0);
-	p = 0;
-	skip(&p, s, c);
-	if (*(s + p) == 0)
-	{
-		box = (char **)malloc(1);
-		*box = 0;
-		return (box);
-	}
-	many = how(s + p, c);
-	box = (char **)ft_calloc(sizeof(char *), many + 1);
+	while (*s == c)
+		s++;
+	many = how((char *)s, c);
+	box = (char **)malloc(sizeof(char *) * (many + 1));
 	if (!box)
 		return (0);
-	if (!set(s + p, c, box))
+	if (!setbox(box, (char *)s, many, c))
 	{
 		splitfree(box);
 		return (0);
 	}
-	*(box + many) = 0;
+	*(box + many) = NULL;
 	return (box);
 }
 
@@ -117,7 +115,7 @@ char	**ft_split(char const *s, char c)
 // 	int	n;
 
 // 	n = 0;
-// 	box = ft_split("  tripouille  42  ", ' ');
+// 	box = ft_split("    ", ' ');
 // 	if (box == 0)
 // 		return 0;
 // 	while (*(box + n))
