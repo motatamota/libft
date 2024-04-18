@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-int	atoisub(char *str, int k, int minus)
+static int	atoisub(char *str, int k, int minus)
 {
 	int		ch;
 	long	ans;

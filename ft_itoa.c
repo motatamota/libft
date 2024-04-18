@@ -38,7 +38,7 @@ static void	set(char *str, long k, int n)
 	*(str + n) = k % 10 + '0';
 }
 
-char	*itoasub(long k, int *size)
+static char	*itoasub(long k, int *size)
 {
 	char	*str;
 
@@ -52,7 +52,7 @@ char	*itoasub(long k, int *size)
 	return (str);
 }
 
-char	*itoasub2(long k, int size, int n)
+static char	*itoasub2(long k, int size, int n)
 {
 	char	*str;
 

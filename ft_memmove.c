@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-void	memmovesub(unsigned char *box, size_t n, unsigned char *bot)
+static void	memmovesub(unsigned char *box, size_t n, unsigned char *bot)
 {
 	size_t	k;
 

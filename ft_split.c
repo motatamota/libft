@@ -13,7 +13,7 @@
 #include "libft.h"
 #include <stdio.h>
 
-int	how(char *s, char c)
+static int	how(char *s, char c)
 {
 	int	n;
 	int	size;
@@ -37,7 +37,7 @@ int	how(char *s, char c)
 	return (size);
 }
 
-void	splitfree(char **box)
+static void	splitfree(char **box)
 {
 	int	n;
 
@@ -50,7 +50,7 @@ void	splitfree(char **box)
 	free(box);
 }
 
-void	setboxsub(int min, int max, char *box, char *s)
+static void	setboxsub(int min, int max, char *box, char *s)
 {
 	int	p;
 
@@ -63,7 +63,7 @@ void	setboxsub(int min, int max, char *box, char *s)
 	}
 }
 
-int	setbox(char **box, char *s, int many, char c)
+static int	setbox(char **box, char *s, int many, char c)
 {
 	int	n;
 	int	min;

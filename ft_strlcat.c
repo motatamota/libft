@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-size_t	scands(char *dest, char *src)
+static size_t	scands(char *dest, char *src)
 {
 	if (!dest && !src)
 		return (0);
