@@ -15,12 +15,10 @@
 
 static int	how(char *s, char c)
 {
-	int	n;
 	int	size;
 
 	if (*s == 0)
 		return (0);
-	n = 0;
 	size = 0;
 	while (*s)
 	{

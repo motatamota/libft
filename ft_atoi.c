@@ -14,11 +14,9 @@
 
 static int	atoisub(char *str, int k, int minus)
 {
-	int		ch;
 	long	ans;
 
 	ans = 0;
-	ch = 0;
 	while (*(str + k) >= '0' && *(str + k) <= '9')
 	{
 		if (__LONG_MAX__ / 10 > ans
